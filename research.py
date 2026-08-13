@@ -121,7 +121,7 @@ df = df.apply(pd.to_numeric, errors="coerce")
 # ------------------------------------------------------------
 # 6. Export cleaned dataset
 # ------------------------------------------------------------
-df.to_csv("data/dataset_clean.csv", index=False)
+df.to_csv("dataCleaned/dataset_clean.csv", index=False)
 print("✅ Dataset cleaned and saved as data/dataset_clean.csv")
 
 print(df.info())
