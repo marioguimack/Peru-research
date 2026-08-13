@@ -68,7 +68,61 @@ df = df.apply(pd.to_numeric, errors="coerce")
 # ------------------------------------------------------------
 # 6. Display structure
 # ------------------------------------------------------------
-print("\n=== DATA LOADED SUCCESSFULLY ===")
+# print("\n=== DATA LOADED SUCCESSFULLY ===")
+# print(df.info())
+# print(df.head())
+
+# ============================================================
+# PART 2 — DATA CLEANING & ECONOMETRIC PREPARATION
+# ============================================================
+
+import pandas as pd
+import numpy as np
+import unicodedata
+
+# ------------------------------------------------------------
+# 1. Drop empty columns (e.g., Unnamed: 2)
+# ------------------------------------------------------------
+df = df.dropna(axis=1, how="all")
+
+# ------------------------------------------------------------
+# 2. Normalize column names
+# ------------------------------------------------------------
+def clean_column(col):
+    col = ''.join(
+        c for c in unicodedata.normalize('NFD', col)
+        if unicodedata.category(c) != 'Mn'
+    )
+    col = col.lower()
+    col = col.replace(" ", "_")
+    col = col.replace("%", "pct")
+    col = col.replace("(", "").replace(")", "")
+    col = col.replace("-", "_")
+    col = col.replace(",", "")
+    return col
+
+df.columns = [clean_column(c) for c in df.columns]
+
+# ------------------------------------------------------------
+# 3. Interpolate missing values
+# ------------------------------------------------------------
+df = df.interpolate(method="linear")
+
+# ------------------------------------------------------------
+# 4. Fill remaining NaNs (pandas 2.0+ syntax)
+# ------------------------------------------------------------
+df = df.bfill().ffill()
+
+# ------------------------------------------------------------
+# 5. Ensure numeric types
+# ------------------------------------------------------------
+df = df.apply(pd.to_numeric, errors="coerce")
+
+# ------------------------------------------------------------
+# 6. Export cleaned dataset
+# ------------------------------------------------------------
+df.to_csv("data/dataset_clean.csv", index=False)
+print("✅ Dataset cleaned and saved as data/dataset_clean.csv")
+
 print(df.info())
 print(df.head())
-
