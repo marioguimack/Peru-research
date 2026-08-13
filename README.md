@@ -97,6 +97,32 @@ These models capture how shocks propagate through the economy.
 
 ---
 
+## 📁 Repository Structure 
+
+Below is the structure for the Peru Growth Research Tool:
+
+```
+Peru-research/
+│
+├── data/                          # Raw datasets (26 CSV files)
+│   ├── *.csv
+│
+├── dataCleaned/                  # Cleaned and merged dataset
+│   └── dataset_clean.csv
+│
+├── results/                      # Automatically generated outputs
+│   ├── results.md                # Full econometric + ML + time-series report
+│   └── plots/                    # All saved visualizations
+│       ├── correlation_heatmap.png
+│       ├── random_forest_importance.png
+│       ├── scatter_private_investment_vs_growth.png
+│       ├── irf.png
+│       └── fevd.png
+│
+├── research.py                   # Main pipeline script
+└── README.md                     # Project documentation
+```
+
 ## 🧠 Key Findings
 
 Across all econometric methods, the results converge on a robust insight:
