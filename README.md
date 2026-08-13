@@ -1,15 +1,53 @@
-# 📘 Peru Growth Research Tool 
+# 📘 Peru Growth Research Tool
 
 ## Personal Note
 
-This project was developed independently to advance my skills from university courses in Applied Financial Econometrics, Financial Intermediation, Machine Learning, and Python-based research workflows.  
+This project was developed independently to advance my skills from university courses in **Applied Financial Econometrics**, **Financial Intermediation**, **Machine Learning**, and **Python-based research workflows**.
 
 I used **Microsoft Copilot** as a development companion to structure, debug, and refine the methodology.  
 It may still be missing some refinements, but it reflects my progress and learning so far.
 
+---
+
+## ⚠️ Important Disclaimers
+
+### Methodology Disclaimer
+While the methodology follows established academic practices, the results should be interpreted as **preliminary and exploratory**.
+
+### Data Limitations
+The analysis is based on a limited sample of **26 annual observations**. This small sample size:
+
+- limits statistical power and inference  
+- increases sensitivity to multicollinearity  
+- constrains the ability to estimate complex time-series models  
+- may produce unstable coefficients across different model specifications  
+
+### Time-Series Analysis Caveat
+The time-series analysis (VAR, IRF, FEVD) was conducted on **non-stationary variables without appropriate differencing**.  
+Although the Johansen cointegration test suggests long-run relationships exist, the VAR estimates should be interpreted with **extreme caution**.
+
+Future iterations will implement a proper **Vector Error Correction Model (VECM)** to address this methodological limitation.
+
+### Instrumental Variables Caveat
+The IV/2SLS results use instruments selected based on economic theory.  
+However, due to the small sample size:
+
+- weak instrument diagnostics (first-stage F-statistics) cannot be reliably estimated  
+- Sargan/Hansen overidentification tests lack statistical power  
+- instrument validity is theoretically motivated but **empirically unverified**
+
+---
+
 ## Model Description
 
-The Peru Growth Research Tool is built around a **multi‑method econometric and machine learning pipeline** designed to understand the drivers of Peru’s real GDP growth. Instead of relying on a single model, the tool integrates classical econometrics, machine learning, and time‑series dynamics to produce a robust, policy‑relevant analysis.
+The Peru Growth Research Tool is built around a **multi‑method econometric and machine learning pipeline** designed to understand the drivers of Peru's real GDP growth.  
+Instead of relying on a single model, the tool integrates:
+
+- classical econometrics  
+- machine learning  
+- dynamic time-series analysis  
+
+to produce a robust, policy-relevant analysis.
 
 ### Core Idea
 
@@ -49,11 +87,13 @@ Random Forest identifies **which variables matter most**, even when statistical 
 
 ### 3. Time Series Dynamics (VAR, IRF, FEVD)
 
+> Note: Interpretations are **exploratory** due to the stationarity issues noted in the disclaimer.
+
 These models capture how shocks propagate through the economy.
 
-- Public investment behaves **countercyclically**.  
-- Shocks to current expenditure reduce growth **persistently**.  
-- FEVD shows growth variance is mostly explained by fiscal variables.
+- Public investment behaves **countercyclically** (preliminary evidence).  
+- Shocks to current expenditure reduce growth **persistently** (requires VECM validation).  
+- FEVD suggests growth variance is mostly explained by fiscal variables (subject to model specification).
 
 ---
 
@@ -61,7 +101,7 @@ These models capture how shocks propagate through the economy.
 
 Across all econometric methods, the results converge on a robust insight:
 
-> **Current government expenditure is the strongest negative determinant of Peru’s real GDP growth.**
+> **Current government expenditure is the strongest negative determinant of Peru's real GDP growth in this dataset.**
 
 ### Additional Findings
 
@@ -73,12 +113,12 @@ Most variables are **statistically insignificant** in OLS and IV, mainly due to:
 
 Other insights:
 
-- **Private investment** is positively associated with growth but *not statistically significant*.  
-- **Public investment** behaves countercyclically but is *not statistically significant*.  
-- **FBCF** shows the expected positive sign but is *not statistically significant*.  
-- **Inflation** has a mild positive effect but is *not statistically significant*.  
-- Growth, investment, and fiscal variables are **cointegrated in the long run**.  
-- Shocks to current expenditure have the **largest negative impact** on future growth.
+- Private investment is positively associated with growth but **not statistically significant**.  
+- Public investment behaves countercyclically but is **not statistically significant**.  
+- FBCF shows the expected positive sign but is **not statistically significant**.  
+- Inflation has a mild positive effect but is **not statistically significant**.  
+- Growth, investment, and fiscal variables show evidence of **cointegration** in the long run (Johansen test).  
+- Shocks to current expenditure have the **largest negative impact** on future growth (preliminary finding).
 
 ---
 
@@ -98,7 +138,7 @@ Other insights:
 - R² = **0.638**  
 - **Current expenditure becomes statistically significant (p = 0.017)**  
 - All other variables remain **insignificant**, confirming weak statistical power  
-- Instruments are economically valid, but sample size limits inference
+- Instruments are economically motivated, but sample size limits formal validation
 
 ---
 
@@ -106,8 +146,7 @@ Other insights:
 
 - Provides variable importance ranking  
 - Confirms **current expenditure dominates**, even when OLS/IV lack significance  
-- Machine learning helps overcome small‑sample limitations by focusing on **predictive relevance**
-
+- Machine learning helps identify predictive patterns despite small‑sample limitations
 
 ## Visual Outputs
 
